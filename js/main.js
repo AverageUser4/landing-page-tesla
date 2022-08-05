@@ -1,9 +1,9 @@
-'use strict';
+import MainMenu from './classes/MainMenu.js';
+import MovingButtonBackground from './classes/MovingButtonBackground.js';
+import InitialAnimation from './classes/InitialAnimation.js';
+import AnnoyingScroll from './classes/AnnoyingScroll.js';
 
-const mainMenu = new MainMenu(
-  document.querySelector('.header-bottom__menu-button'),
-  document.querySelector('.main-menu__close-button'),
-  document.querySelector('.main-menu-background'),
-  document.querySelector('.main-menu'),
-  document.querySelector('.main-menu__links-list'),
-);
+const mainMenu = new MainMenu();
+const movingButtonBackground = new MovingButtonBackground();
+const initialAnimation = new InitialAnimation();
+const annoyingScroll = new AnnoyingScroll();

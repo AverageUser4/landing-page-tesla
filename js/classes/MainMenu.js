@@ -1,22 +1,19 @@
-'use strict';
-
-class MainMenu {
+export default class MainMenu {
 
   opener;
   closer;
   dropdown;
   menu;
-
   transitionDuration;
 
-  constructor(opener, closer, dropdown, menu) {
-    this.opener = opener;
-    this.closer = closer;
-    this.dropdown = dropdown;
-    this.menu = menu;
+  constructor() {
+    this.opener = document.querySelector('.header-bottom__menu-button');
+    this.closer = document.querySelector('.main-menu__close-button');
+    this.dropdown = document.querySelector('.main-menu-background');
+    this.menu = document.querySelector('.main-menu');
 
     this.transitionDuration = 1000 *
-      parseFloat(getComputedStyle(dropdown).transitionDuration);
+      parseFloat(getComputedStyle(this.dropdown).transitionDuration);
 
     this.opener.addEventListener('click', () => this.open());
     this.closer.addEventListener('click', () => this.close());
@@ -38,8 +35,7 @@ class MainMenu {
     this.dropdown.classList.remove('main-menu-background--visible');
     this.menu.classList.remove('main-menu--visible');
 
-    setTimeout(() =>
-      this.dropdown.style.display = 'none',
+    setTimeout(() => { this.dropdown.style.display = 'none' },
       this.transitionDuration
     );
   }

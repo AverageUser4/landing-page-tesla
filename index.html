@@ -11,13 +11,14 @@
   <link rel="icon" href="resources/general/favicon.png">
   <link rel="stylesheet" href="css/main.css">
 
-  <script defer src="js/classes/MainMenu.js"></script>
-  <script defer src="js/main.js"></script>
+  <script type="module" src="js/main.js"></script>
 
 </head>
 
 <body>
   
+  <h1 style="position: absolute; pointer-events: none; top: -9999px">Electric Cars, Solar & Clean Energy | Tesla</h1>
+
   <div class="main-menu-background">
 
     <nav class="main-menu">
@@ -30,7 +31,7 @@
 
       <ul class="main-menu__links-list">
 
-        <li class="main-menu__links-list-item"><a class="main-menu__button main-menu__links-list-link invisible" href="#">Model S</a></li>
+        <li class="main-menu__links-list-item"><a class="main-menu__button main-menu__links-list-link desktop-invisible" href="#">Model S</a></li>
         <li class="main-menu__links-list-item"><a class="main-menu__button main-menu__links-list-link desktop-invisible" href="#">Model 3</a></li>
         <li class="main-menu__links-list-item"><a class="main-menu__button main-menu__links-list-link desktop-invisible" href="#">Model X</a></li>
         <li class="main-menu__links-list-item"><a class="main-menu__button main-menu__links-list-link desktop-invisible" href="#">Model Y</a></li>
@@ -96,28 +97,67 @@
       
           </a>
 
-          <nav class="header-bottom__desktop-nav desktop-invisible-flex">
+          <nav class="header-bottom__desktop-nav mobile-invisible-flex">
 
-            <a class="header-bottom__desktop-nav-element" href="#">Model S</a>
-            <a class="header-bottom__desktop-nav-element" href="#">Model 3</a>
-            <a class="header-bottom__desktop-nav-element" href="#">Model X</a>
-            <a class="header-bottom__desktop-nav-element" href="#">Model Y</a>
-            <a class="header-bottom__desktop-nav-element" href="#">Solar Roof</a>
-            <a class="header-bottom__desktop-nav-element" href="#">Solar Panels</a>
+            <a data-mv-bg="1" class="header-bottom__desktop-nav-element" href="#">Model S</a>
+            <a data-mv-bg="1" class="header-bottom__desktop-nav-element" href="#">Model 3</a>
+            <a data-mv-bg="1" class="header-bottom__desktop-nav-element" href="#">Model X</a>
+            <a data-mv-bg="1" class="header-bottom__desktop-nav-element" href="#">Model Y</a>
+            <a data-mv-bg="1" class="header-bottom__desktop-nav-element" href="#">Solar Roof</a>
+            <a data-mv-bg="1" class="header-bottom__desktop-nav-element" href="#">Solar Panels</a>
 
           </nav>
 
           <nav class="header-bottom__right-nav">
 
-            <a class="header-bottom__desktop-nav-element desktop-invisible" href="#">Shop</a>
-            <a class="header-bottom__desktop-nav-element desktop-invisible" href="#">Account</a>
-            <button class="header-bottom__menu-button">Menu</button>
+            <a data-mv-bg="1" class="header-bottom__desktop-nav-element mobile-invisible" href="#">Shop</a>
+            <a data-mv-bg="1" class="header-bottom__desktop-nav-element mobile-invisible" href="#">Account</a>
+            <button data-mv-bg="1" class="header-bottom__menu-button">Menu</button>
 
           </nav>
+
+          <div class="header-bottom__moving-background"></div>
 
     </section>
 
   </header>
+
+  <main class="the-main">
+
+    <div class="the-main__top-container">
+
+      <h2 class="the-main__top-header the-main__top-header--hidden">Model 3</h2>
+      <span class="the-main__top-span the-main__top-span--hidden">Order Online for <a class="generic-link" href="#">Touchless delivery</a></span>
+
+    </div>
+
+    <div class="the-main__buttons-container">
+
+      <a class="the-main__info-button the-main__info-button-left--hidden" href="#">CUSTOM ORDER</a>
+      <a class="the-main__info-button the-main__info-button-right--hidden the-main__info-button--white" href="#">EXISTING INVENTORY</a>
+
+    </div>
+
+    <button class="the-main__go-down-button the-main__go-down-button--hidden">
+
+      <svg class="the-main__go-down-svg" viewBox="0 0 30 30" xmlns="http://www.w3.org/2000/svg">
+
+        <use xlink:href="#tds-icon-chevron--filled--180"></use>
+        <symbol id="tds-icon-chevron--filled--180" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4.293 16.317a1 1 0 0 0 1.414 0L12 10.025l6.293 6.293a1 1 0 1 0 1.414-1.414l-7-7a1 1 0 0 0-1.414 0l-7 7a1 1 0 0 0 0 1.414z" transform="rotate(180 12 12)" fill="currentColor"></path>
+        </symbol>
+
+      </svg>
+
+    </button>
+
+    <article class="the-main__product the-main__product--model-3"></article>
+    <article class="the-main__product the-main__product--model-y"></article>
+    <article class="the-main__product the-main__product--model-s"></article>
+    <article class="the-main__product the-main__product--model-x"></article>
+
+
+  </main>
 
 </body>
 

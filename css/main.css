@@ -11,24 +11,21 @@
 body {
   margin: 0;
   font-family: Gotham;
+  height: 10000px;
+}
+
+.mobile-invisible {
+  display: none;
+}
+
+.mobile-invisible-flex {
+  display: none;
 }
 
 .desktop-invisible {
-  display: none;
+  display: block;
 }
 
-.desktop-invisible-flex {
-  display: none;
-}
-
-@media (min-width: 1200px) {
-  .desktop-invisible {
-    display: block;
-  }
-  .desktop-invisible-flex {
-    display: flex;
-  }
-}
 .generic-link {
   line-height: 1.25rem;
   text-underline-offset: 4px;
@@ -43,6 +40,7 @@ body {
 .the-header {
   position: fixed;
   top: 0;
+  z-index: 3;
   width: 100%;
 }
 
@@ -56,6 +54,7 @@ body {
 }
 
 .header-bottom {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -92,31 +91,18 @@ body {
   cursor: pointer;
 }
 
-@media (min-width: 1200px) {
-  .header-bottom__logo-container {
-    margin-left: 48px;
-    padding-right: 90px;
-  }
-  .header-bottom__desktop-nav-element {
-    display: block;
-    padding: 9px 17px;
-    color: rgb(20, 20, 20);
-    font-weight: bold;
-    font-size: 0.875rem;
-    text-decoration: none;
-    line-height: 100%;
-  }
-  .header-bottom__right-nav {
-    display: flex;
-    margin-right: 32px;
-  }
-  .header-bottom__menu-button {
-    background-color: transparent;
-  }
-  .header-bottom__menu-button:hover {
-    background-color: transparent;
-  }
+.header-bottom__moving-background {
+  position: absolute;
+  top: 12px;
+  width: 100px;
+  height: 32px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 300ms;
 }
+
 .main-menu-background {
   display: none;
   position: fixed;
@@ -242,8 +228,190 @@ body {
 }
 
 @media (min-width: 1200px) {
-  .main-menu__desktop-invisible {
+  .header-bottom__logo-container {
+    margin-left: 48px;
+    padding-right: 99px;
+  }
+  .header-bottom__desktop-nav-element {
+    display: block;
+    padding: 9px 17px;
+    color: rgb(20, 20, 20);
+    font-weight: bold;
+    font-size: 0.875rem;
+    text-decoration: none;
+    line-height: 100%;
+  }
+  .header-bottom__right-nav {
+    display: flex;
+    margin-right: 32px;
+  }
+  .header-bottom__menu-button {
+    background-color: transparent;
+  }
+  .header-bottom__menu-button:hover {
+    background-color: transparent;
+  }
+}
+.the-main {
+  position: relative;
+  margin-top: 52px;
+}
+
+.the-main__top-container {
+  position: absolute;
+  top: 15vh;
+  text-align: center;
+  width: 100%;
+}
+
+.the-main__top-header {
+  position: relative;
+  top: 0;
+  transition: 500ms;
+  font-size: 2.5rem;
+  color: rgb(23, 26, 32);
+  margin: 0 0 8px;
+}
+
+.the-main__top-header--hidden {
+  top: -50px;
+  opacity: 0;
+}
+
+.the-main__top-span {
+  position: relative;
+  top: 0;
+  transition: 500ms;
+  color: rgb(57, 60, 65);
+  font-size: 0.875rem;
+}
+
+.the-main__top-span--hidden {
+  top: 50px;
+  opacity: 0;
+}
+
+.the-main__buttons-container {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 75vh;
+  width: 100%;
+}
+
+.the-main__info-button {
+  position: relative;
+  left: 0;
+  transition: 500ms;
+  display: block;
+  width: 264px;
+  padding: 14px 0;
+  box-sizing: border-box;
+  border-radius: 30px;
+  font-size: 0.75rem;
+  background-color: rgba(23, 26, 32, 0.8);
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  text-decoration: none;
+  line-height: 100%;
+}
+.the-main__info-button:first-of-type {
+  margin-right: 32px;
+}
+
+.the-main__info-button--white {
+  background-color: rgba(244, 244, 244, 0.65);
+  color: rgb(57, 60, 65);
+}
+
+.the-main__info-button-left--hidden {
+  left: -100px;
+  opacity: 0;
+}
+
+.the-main__info-button-right--hidden {
+  left: 100px;
+  opacity: 0;
+}
+
+.the-main__go-down-button {
+  transition: 800ms;
+  position: absolute;
+  top: 87vh;
+  left: 50%;
+  padding: 12px;
+  transform: translate(-50%, 0);
+  border: none;
+  background: none;
+}
+.the-main__go-down-button:hover {
+  cursor: pointer;
+}
+
+.the-main__go-down-button--hidden {
+  opacity: 0;
+}
+
+@keyframes moving-arrow {
+  0% {
+    top: 0;
+  }
+  5% {
+    top: 5px;
+  }
+  10% {
+    top: 0px;
+  }
+  15% {
+    top: 4px;
+  }
+  25% {
+    top: 0;
+  }
+  100% {
+    top: 0;
+  }
+}
+.the-main__go-down-svg {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  animation: moving-arrow 4s 1s linear infinite;
+}
+
+.the-main__product {
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: calc(100vh - 52px);
+}
+
+.the-main__product--model-3 {
+  background-image: url("../resources/desktop/model-3.jpg");
+}
+
+.the-main__product--model-y {
+  background-image: url("../resources/desktop/model-y.jpg");
+}
+
+.the-main__product--model-s {
+  background-image: url("../resources/desktop/model-s.jpg");
+}
+
+.the-main__product--model-x {
+  background-image: url("../resources/desktop/model-x.jpg");
+}
+
+@media (min-width: 1200px) {
+  .desktop-invisible {
     display: none;
+  }
+  .mobile-invisible-flex {
+    display: flex;
+  }
+  .mobile-invisible {
+    display: block;
   }
 }
 

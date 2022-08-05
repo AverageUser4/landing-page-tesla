@@ -1,0 +1,29 @@
+@media (min-width: 1200px) {
+  .header-bottom__logo-container {
+    margin-left: 48px;
+    padding-right: 99px;
+  }
+
+  .header-bottom__desktop-nav-element {
+    display: block;
+    padding: 9px 17px;
+    color: rgb(20, 20, 20);
+    font-weight: bold;
+    font-size: 0.875rem;
+    text-decoration: none;
+    line-height: 100%;
+  }
+
+  .header-bottom__right-nav {
+    display: flex;
+    margin-right: 32px;
+  }
+  
+  .header-bottom__menu-button {
+    background-color: transparent;
+    &:hover {
+      background-color: transparent;
+    }
+  }
+
+}

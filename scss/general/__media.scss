@@ -1,0 +1,11 @@
+@media(min-width: 1200px) {
+  .desktop-invisible {
+    display: none;
+  }
+  .mobile-invisible-flex {
+    display: flex;
+  }
+  .mobile-invisible {
+    display: block;
+  }
+}
