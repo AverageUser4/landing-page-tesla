@@ -1,11 +1,10 @@
 .the-main {
   position: relative;
-  margin-top: 52px;
 }
 
 .the-main__top-container {
-  position: absolute;
-  top: 15vh;
+  position: fixed;
+  top: 19vh;
   text-align: center;
   width: 100%;
 }
@@ -13,10 +12,10 @@
 .the-main__top-header {
   position: relative;
   top: 0;
-  transition: 500ms;
   font-size: 2.5rem;
   color: rgb(23, 26, 32);
   margin: 0 0 8px;
+  transition: 500ms;
 }
 .the-main__top-header--hidden {
   top: -50px;
@@ -36,10 +35,10 @@
 }
 
 .the-main__buttons-container {
+  position: fixed;
+  top: 82.5vh;
   display: flex;
   justify-content: center;
-  position: absolute;
-  top: 75vh;
   width: 100%;
 }
 
@@ -60,7 +59,7 @@
   text-decoration: none;
   line-height: 100%;
   &:first-of-type {
-    margin-right: 32px;
+    margin-right: 38px;
   }
 }
 .the-main__info-button--white {
@@ -78,8 +77,8 @@
 
 .the-main__go-down-button {
   transition: 800ms;
-  position: absolute;
-  top: 87vh;
+  position: fixed;
+  top: 93vh;
   left: 50%;
   padding: 12px;
   transform: translate(-50%, 0);
@@ -113,7 +112,7 @@
   background-size: cover;
   background-position: center;
   width: 100%;
-  height: calc(100vh - 52px);
+  height: 100vh;
 }
 
 .the-main__product--model-3 {
@@ -130,4 +129,16 @@
 
 .the-main__product--model-x {
   background-image: url('../resources/desktop/model-x.jpg');
+}
+
+.the-main__product--solar-panels {
+  background-image: url('../resources/desktop/solar-panels.jpg');
+}
+
+.the-main__product--solar-roof {
+  background-image: url('../resources/desktop/solar-roof.jpg');
+}
+
+.the-main__product--accessories {
+  background-image: url('../resources/desktop/accessories.jpg');
 }

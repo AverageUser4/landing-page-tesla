@@ -17,14 +17,15 @@ export default class InitialAnimation {
     this.buttonRight = document.querySelector('.the-main__info-button-right--hidden');
     this.goDownButton = document.querySelector('.the-main__go-down-button');
 
-    if(1) {
-      this.header.classList.remove('the-main__top-header--hidden');
-      this.span.classList.remove('the-main__top-span--hidden');
-      this.buttonLeft.classList.remove('the-main__info-button-left--hidden');
-      this.buttonRight.classList.remove('the-main__info-button-right--hidden');
-      this.goDownButton.classList.remove('the-main__go-down-button--hidden');
-      return;
-    }
+    // if(1) {
+    //   this.header.classList.remove('the-main__top-header--hidden');
+    //   this.span.classList.remove('the-main__top-span--hidden');
+    //   this.buttonLeft.classList.remove('the-main__info-button-left--hidden');
+    //   this.buttonRight.classList.remove('the-main__info-button-right--hidden');
+    //   this.goDownButton.classList.remove('the-main__go-down-button--hidden');
+
+    //   return;
+    // }
 
     window.addEventListener('load', () => {
 
@@ -45,7 +46,17 @@ export default class InitialAnimation {
       .then(() => {
         setTimeout(() => {
           this.goDownButton.classList.remove('the-main__go-down-button--hidden');
+
         }, 500);
+      })
+      .then(() => {
+        setTimeout(() => {
+          this.header.style.transition = 'none';
+          this.span.style.transition = 'none';
+          this.buttonLeft.style.transition = 'none';
+          this.buttonRight.style.transition = 'none';
+          this.goDownButton.style.transition = 'none';
+        }, 800);
       });
 
     });
