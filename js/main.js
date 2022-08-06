@@ -14,4 +14,9 @@ const headerAndOtherChanger = new HeaderAndOtherChanger();
   - menu często nie jest animowane przy otwieraniu
   - annoying scroll nie jest gotowy, nie ma wsparcia
   dla touch iwentu i przesuwania klawiaturą
+  - przyciski (czarny i biały) powinny być jeden pod drugim w widoku mobilnym
+  - nie ma jeszcze stopki
+  - można scrollować gdy menu jest otwarte
+  - HeaderAndOtherChanger może zostać trochę zoptymalizowany
+  - nie ma jeszcze alternatywnych zdjęć dla widoku mobilnego
 */

@@ -55,7 +55,7 @@ export default class InitialAnimation {
           this.span.style.transition = 'none';
           this.buttonLeft.style.transition = 'none';
           this.buttonRight.style.transition = 'none';
-          this.goDownButton.style.transition = 'none';
+          this.goDownButton.style.transition = 'all 250ms';
         }, 800);
       });
 
