@@ -36,9 +36,10 @@
 
 .the-main__buttons-container {
   position: fixed;
-  top: 82.5vh;
+  top: 78vh;
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   width: 100%;
 }
 
@@ -47,7 +48,7 @@
   left: 0;
   transition: 500ms;
   display: block;
-  width: 264px;
+  width: 90%;
   padding: 14px 0;
   box-sizing: border-box;
   border-radius: 30px;
@@ -59,9 +60,22 @@
   text-decoration: none;
   line-height: 100%;
   &:first-of-type {
-    margin-right: 38px;
+    margin: 0 0 16px;
   }
 }
+
+@media (min-width: 680px) {
+  .the-main__buttons-container {
+    top: 82.5vh;
+  }
+  .the-main__info-button {
+    width: 264px;
+    &:first-of-type {
+      margin: 0 32px 0 0;
+    }
+  }
+}
+
 .the-main__info-button--hidden {
   display: none;
 }
@@ -121,30 +135,62 @@
   height: 100vh;
 }
 
-.the-main__product--model-3 {
-  background-image: url('../resources/desktop/model-3.jpg');
+@media (max-width: 679px) {
+  .the-main__product--model-3 {
+    background-image: url('../resources/mobile/model-3-mobile.jpg');
+  }
+  
+  .the-main__product--model-y {
+    background-image: url('../resources/mobile/model-y-mobile.jpg');
+  }
+  
+  .the-main__product--model-s {
+    background-image: url('../resources/mobile/model-s-mobile.jpg');
+  }
+  
+  .the-main__product--model-x {
+    background-image: url('../resources/mobile/model-x-mobile.jpg');
+  }
+  
+  .the-main__product--solar-panels {
+    background-image: url('../resources/mobile/solar-panels-mobile.jpg');
+  }
+  
+  .the-main__product--solar-roof {
+    background-image: url('../resources/mobile/solar-roof-mobile.jpg');
+  }
+  
+  .the-main__product--accessories {
+    background-image: url('../resources/mobile/accessories-mobile.jpg');
+  }
 }
 
-.the-main__product--model-y {
-  background-image: url('../resources/desktop/model-y.jpg');
-}
-
-.the-main__product--model-s {
-  background-image: url('../resources/desktop/model-s.jpg');
-}
-
-.the-main__product--model-x {
-  background-image: url('../resources/desktop/model-x.jpg');
-}
-
-.the-main__product--solar-panels {
-  background-image: url('../resources/desktop/solar-panels.jpg');
-}
-
-.the-main__product--solar-roof {
-  background-image: url('../resources/desktop/solar-roof.jpg');
-}
-
-.the-main__product--accessories {
-  background-image: url('../resources/desktop/accessories.jpg');
+@media (min-width: 680px) {
+  .the-main__product--model-3 {
+    background-image: url('../resources/desktop/model-3.jpg');
+  }
+  
+  .the-main__product--model-y {
+    background-image: url('../resources/desktop/model-y.jpg');
+  }
+  
+  .the-main__product--model-s {
+    background-image: url('../resources/desktop/model-s.jpg');
+  }
+  
+  .the-main__product--model-x {
+    background-image: url('../resources/desktop/model-x.jpg');
+  }
+  
+  .the-main__product--solar-panels {
+    background-image: url('../resources/desktop/solar-panels.jpg');
+  }
+  
+  .the-main__product--solar-roof {
+    background-image: url('../resources/desktop/solar-roof.jpg');
+  }
+  
+  .the-main__product--accessories {
+    background-image: url('../resources/desktop/accessories.jpg');
+  }
 }

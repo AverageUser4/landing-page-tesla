@@ -3,9 +3,6 @@ export default class HeaderAndOtherChanger {
   /*
     text content is unconditionally overridden in some places, even
     with the same value, may need some optimization
-
-    - remove arrow when scrolling past first article
-    - change buttons in accessories
   */
 
   top;
@@ -16,6 +13,7 @@ export default class HeaderAndOtherChanger {
   prodDescOne = 'Order Online for <a class="generic-link" href="#">Touchless delivery</a>';
   prodDescTwo = 'Lowest Cost Solar Panels in America';
   prodDescThree = 'Produce Clean Energy From Your Roof';
+  hideGoDownButtonTimeoutId;
 
   constructor() {    
     this.top = document.querySelector('.the-main__top-container');
@@ -163,10 +161,12 @@ export default class HeaderAndOtherChanger {
 
   hideGoDownButton() {
     this.goDownButton.style.opacity = 0;
-    setTimeout(() => this.goDownButton.style.display = 'none', 250);
+    this.hideGoDownButtonTimeoutId =
+      setTimeout(() => this.goDownButton.style.display = 'none', 250);
   }
 
   showGoDownButton() {
+    clearTimeout(this.hideGoDownButtonTimeoutId);
     this.goDownButton.style.display = 'block';
     setTimeout(() => this.goDownButton.style.opacity = 1);
   }

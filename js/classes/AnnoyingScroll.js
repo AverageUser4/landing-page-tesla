@@ -1,18 +1,45 @@
 export default class AnnoyingScroll {
 
+  /*
+    on mouseup, if scrollY is not divisible by innerHeight,
+    find the closest scrollY that is and move up or down
+  */
+
   scrollBlocked = false;
+  blockSafetyTimeoutId;
   bodyHeight;
   scrollAnimationIntervalId;
+  lastTouchY;
+  /*
+    whlie turnedOff the object shouldn't really do anything,
+    currently it is turned off only when menu is open
+  */
+  turnedOff = false;
 
   constructor() {
-
     this.bodyHeight = document.body.getBoundingClientRect().height;
     window.addEventListener('resize', () => {
       this.bodyHeight = document.body.getBoundingClientRect().height;
     });
 
+    document.querySelector('.the-main__go-down-button').addEventListener('click',
+      () => this.moveDown());
+
+    window.addEventListener('mouseup', 
+      () => {
+        if(this.turnedOff)
+          return;
+
+        this.findTheClosest();
+      }
+    );
+
     window.addEventListener('wheel',
       e => {
+        if(this.turnedOff)
+          return;
+
+        // allow zooming in and out
         if(e.ctrlKey)
           return;
 
@@ -26,33 +53,99 @@ export default class AnnoyingScroll {
       { passive: false }
     );
 
-
-    /*
-      - użytkownik kładzie palec, pobieramy jego współrzędną Y
-      - przy przesunięciu porównujemy współrzędne, updatujemy Y i przesuwamy
-      w zależności od tego gdzie użytkownik przesunął
-    */
+    window.addEventListener('touchstart',
+      e => {
+        if(this.turnedOff)
+          return;
+        this.lastTouchY = e.touches[0].clientY;  
+      }
+    );
 
     window.addEventListener('touchmove',
       e => {
+        if(this.turnedOff)
+          return;
+
         e.preventDefault();
-        console.log(e);
+
+        if(e.touches[0].clientY < this.lastTouchY)
+          this.moveDown();
+        else
+          this.moveUp();
+
+        this.lastTouchY = e.touches[0].clientY;
       },
       { passive: false }
     );
 
-    // left: 37, up: 38, right: 39, down: 40,
-    // spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
-    // 'touchmove'
+    window.addEventListener('keydown',
+      (e) => {
+        if(this.turnedOff)
+          return;
+
+        switch(e.key) {
+          case 'ArrowUp':
+            e.preventDefault();
+            this.moveUp();
+            break;
+
+          case 'ArrowDown':
+            e.preventDefault();
+            this.moveDown();
+            break;
+
+          case 'PageUp':
+            e.preventDefault();
+            this.moveUp(true);
+            break;
+
+          case 'PageDown':
+            e.preventDefault();
+            this.moveDown(true);
+            break;
+
+          // spacebar
+          case ' ':
+            e.preventDefault();
+
+            if(e.shiftKey)
+              this.moveUp();
+            else
+              this.moveDown();
+            break;
+        }
+      },
+      { passive: false }
+    );
+
   }
 
-  
+  findTheClosest() {
+    if(this.turnedOff)
+      return;
 
-  moveUp() {
+    if(scrollY % innerHeight === 0)
+      return;
+
+    for(let i = 0; i < this.bodyHeight; i += innerHeight) {
+      if(Math.abs(scrollY - i) < innerHeight) {
+        if(Math.abs(scrollY - i) < Math.abs(scrollY - i - innerHeight))
+          this.moveUp();
+        else
+          this.moveDown();
+        
+        break;
+      }
+    }
+  }
+
+  moveUp(instant) {
+    if(this.turnedOff)
+      return;
+
     if(this.scrollBlocked || scrollY === 0)
       return;
 
-    this.scrollBlocked = true;
     let scrollDestination = scrollY - innerHeight;
 
     if(scrollDestination < 0)
@@ -68,13 +161,26 @@ export default class AnnoyingScroll {
       }
     }
 
-    const scrollAmount = (scrollDestination - scrollY) / 30;
+    clearInterval(this.scrollAnimationIntervalId);
 
+    if(instant) {
+      scrollTo({
+        top: scrollDestination, 
+        behavior: 'instant'
+      });
+      return;
+    }
+
+    this.blockScroll();
+    const scrollAmount = (scrollDestination - scrollY) / 30;
     this.scrollAnimationIntervalId = 
       setInterval(() => this.scrollingFunction(scrollDestination, scrollAmount, 'up'), 10);
   }
 
-  moveDown() {
+  moveDown(instant) {
+    if(this.turnedOff)
+      return;
+
     // don't do anything if it's currently scrolling
     // or scroll is at the end
     if(
@@ -83,7 +189,6 @@ export default class AnnoyingScroll {
       )
       return;
 
-    this.scrollBlocked = true;
     let scrollDestination = scrollY + innerHeight;
 
     // destination is not valid if it's not divisible by viewport height
@@ -99,8 +204,18 @@ export default class AnnoyingScroll {
       }
     }
 
-    const scrollAmount = (scrollDestination - scrollY) / 30;
+    clearInterval(this.scrollAnimationIntervalId);
 
+    if(instant) {
+      scrollTo({
+        top: scrollDestination, 
+        behavior: 'instant'
+      });
+      return;
+    }
+
+    this.blockScroll();
+    const scrollAmount = (scrollDestination - scrollY) / 30;
     this.scrollAnimationIntervalId = 
       setInterval(() => this.scrollingFunction(scrollDestination, scrollAmount, 'down'), 10);
   }
@@ -119,7 +234,7 @@ export default class AnnoyingScroll {
       });
 
       setTimeout(() => {
-        this.scrollBlocked = false;
+        this.unblockScroll();
       }, 500);
 
       return;
@@ -129,6 +244,27 @@ export default class AnnoyingScroll {
       top: scrollAmount, 
       behavior: 'instant'
     });
+  }
+
+  blockScroll() {
+    this.scrollBlocked = true;
+
+    this.blockSafetyTimeoutId = setTimeout(() => {
+      this.scrollBlocked = false;
+    }, 1000);
+  }
+
+  unblockScroll() {
+    clearTimeout(this.blockSafetyTimeoutId);
+    this.scrollBlocked = false;
+  }
+
+  turnOff() {
+    this.turnedOff = true;
+  }
+
+  turnOn() {
+    this.turnedOff = false;
   }
 
 }
