@@ -142,6 +142,8 @@ export default class AnnoyingScroll {
   }
 
   onFocusTop() {
+    if(this.turnedOff)
+      return;
     // if user is going down with tab or page is scrolled to top
     if(
       !this.lastTabWithShift ||
@@ -154,6 +156,8 @@ export default class AnnoyingScroll {
   }
 
   onFocusBottom() {
+    if(this.turnedOff)
+      return;
     // if user is going up with tab or page is scrolled to bottom
     if(
         this.lastTabWithShift ||
@@ -166,6 +170,8 @@ export default class AnnoyingScroll {
   }
 
   tabReact(e) {
+    if(this.turnedOff)
+      return;
     // prevents tab from focusing footer links when it shouldn't
     if(e.key !== 'Tab')
       return;
