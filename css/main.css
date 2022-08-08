@@ -406,6 +406,14 @@ body {
   height: 100vh;
 }
 
+.the-main__tab-accessibility-button-top,
+.the-main__tab-accessibility-button-bottom {
+  position: fixed;
+  top: -9999px;
+  pointer-events: none;
+  opacity: 0;
+}
+
 @media (max-width: 679px) {
   .the-main__product--model-3 {
     background-image: url("../resources/mobile/model-3-mobile.jpg");

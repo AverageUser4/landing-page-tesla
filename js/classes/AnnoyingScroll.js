@@ -13,9 +13,10 @@ export default class AnnoyingScroll {
 
   /* these have to do with tab accessibility */
   firstFocusableElement;
-  allFocusableElements = [];
   menuButton;
   footer;
+  tabAccessibilityButtonBottom;
+  lastTabWithShift;
   /*
     whlie turnedOff the object shouldn't really do anything,
     currently it is turned off only when menu is open
@@ -32,18 +33,11 @@ export default class AnnoyingScroll {
     this.firstFocusableElement = document.querySelector('[data-first-focusable="1"]');
     this.menuButton = document.querySelector('.header-bottom__menu-button');
     this.footer = document.querySelector('.the-footer');
+    this.tabAccessibilityButtonTop = document.querySelector('.the-main__tab-accessibility-button-top');
+    this.tabAccessibilityButtonBottom = document.querySelector('.the-main__tab-accessibility-button-bottom');
 
-    const allATags = document.getElementsByTagName('a');
-    const allButtonTags = document.getElementsByTagName('button');
-    const mainMenu = document.querySelector('.main-menu');
-
-    for(let val of allATags)
-      if(!mainMenu.contains(val))
-        this.allFocusableElements.push(val);
-
-    for(let val of allButtonTags)
-      if(!mainMenu.contains(val))
-        this.allFocusableElements.push(val);
+    this.tabAccessibilityButtonTop.addEventListener('focus', () => this.onFocusTop());
+    this.tabAccessibilityButtonBottom.addEventListener('focus', () => this.onFocusBottom());
 
     // make website traversable using tab
     window.addEventListener('keydown', (e) => this.tabReact(e), { passive: false} );
@@ -147,50 +141,45 @@ export default class AnnoyingScroll {
 
   }
 
+  onFocusTop() {
+    // if user is going down with tab or page is scrolled to top
+    if(
+      !this.lastTabWithShift ||
+      scrollY <= 0
+      )
+      return;
+
+    this.tabAccessibilityButtonBottom.focus({ preventScroll: true });
+    this.moveUp();
+  }
+
+  onFocusBottom() {
+    // if user is going up with tab or page is scrolled to bottom
+    if(
+        this.lastTabWithShift ||
+        scrollY >= this.bodyHeight - innerHeight
+      )
+      return;
+    
+    this.tabAccessibilityButtonTop.focus({ preventScroll: true });
+    this.moveDown();
+  }
+
   tabReact(e) {
+    // prevents tab from focusing footer links when it shouldn't
     if(e.key !== 'Tab')
       return;
+
+    this.lastTabWithShift = false;
+    if(e.shiftKey)
+      this.lastTabWithShift = true;
+
+    console.log(e.shiftKey, this.lastTabWithShift)
 
     if(document.activeElement.tagName === 'BODY') {
       e.preventDefault();
       this.firstFocusableElement.focus();
     }
-    
-    /*
-      - jeżeli jest nastęny element, który ma display !== 'none'
-      i nie należy do footera, nie rób nic
-      - w przeciwnym razie:
-        - jeżeli jesteś na samym dole focusuj przyciski footera
-        (czyli też nie rób nic)
-        - jeżeli nie to przesuń w dół i focusuj pierwszy przycisk po Menu
-    */
-    //this.allFocusableElements;
-
-    console.log(...this.allFocusableElements)
-
-    // if user is not trying to move down with tab and page is not scrolled to bottom
-    if(!e.shiftKey && !(scrollY >= this.bodyHeight - innerHeight)) {
-      for(let val of this.allFocusableElements) {
-        console.log(document.activeElement.compareDocumentPosition(val));
-        if(
-            !this.footer.contains(val) &&
-            !getComputedStyle(val).display === 'none' &&
-            // if val is not after the active element
-            document.activeElement.compareDocumentPosition(val) === 4
-          )
-          break;
-
-        console.log(val, document.activeElement)
-        e.preventDefault();
-
-        this.moveDown();
-
-        break;
-        // check if there is focusable element that doesn't belong to the footer
-        // after the one that isn't focused 
-      }
-    }
-
   }
 
   findTheClosest() {
