@@ -10,6 +10,12 @@ export default class AnnoyingScroll {
   bodyHeight;
   scrollAnimationIntervalId;
   lastTouchY;
+
+  /* these have to do with tab accessibility */
+  firstFocusableElement;
+  allFocusableElements = [];
+  menuButton;
+  footer;
   /*
     whlie turnedOff the object shouldn't really do anything,
     currently it is turned off only when menu is open
@@ -22,9 +28,30 @@ export default class AnnoyingScroll {
       this.bodyHeight = document.body.getBoundingClientRect().height;
     });
 
+    // tab accessibility
+    this.firstFocusableElement = document.querySelector('[data-first-focusable="1"]');
+    this.menuButton = document.querySelector('.header-bottom__menu-button');
+    this.footer = document.querySelector('.the-footer');
+
+    const allATags = document.getElementsByTagName('a');
+    const allButtonTags = document.getElementsByTagName('button');
+    const mainMenu = document.querySelector('.main-menu');
+
+    for(let val of allATags)
+      if(!mainMenu.contains(val))
+        this.allFocusableElements.push(val);
+
+    for(let val of allButtonTags)
+      if(!mainMenu.contains(val))
+        this.allFocusableElements.push(val);
+
+    // make website traversable using tab
+    window.addEventListener('keydown', (e) => this.tabReact(e), { passive: false} );
+
     document.querySelector('.the-main__go-down-button').addEventListener('click',
       () => this.moveDown());
 
+    // when user releases the scrollbar
     window.addEventListener('mouseup', 
       () => {
         if(this.turnedOff)
@@ -120,11 +147,60 @@ export default class AnnoyingScroll {
 
   }
 
+  tabReact(e) {
+    if(e.key !== 'Tab')
+      return;
+
+    if(document.activeElement.tagName === 'BODY') {
+      e.preventDefault();
+      this.firstFocusableElement.focus();
+    }
+    
+    /*
+      - jeżeli jest nastęny element, który ma display !== 'none'
+      i nie należy do footera, nie rób nic
+      - w przeciwnym razie:
+        - jeżeli jesteś na samym dole focusuj przyciski footera
+        (czyli też nie rób nic)
+        - jeżeli nie to przesuń w dół i focusuj pierwszy przycisk po Menu
+    */
+    //this.allFocusableElements;
+
+    console.log(...this.allFocusableElements)
+
+    // if user is not trying to move down with tab and page is not scrolled to bottom
+    if(!e.shiftKey && !(scrollY >= this.bodyHeight - innerHeight)) {
+      for(let val of this.allFocusableElements) {
+        console.log(document.activeElement.compareDocumentPosition(val));
+        if(
+            !this.footer.contains(val) &&
+            !getComputedStyle(val).display === 'none' &&
+            // if val is not after the active element
+            document.activeElement.compareDocumentPosition(val) === 4
+          )
+          break;
+
+        console.log(val, document.activeElement)
+        e.preventDefault();
+
+        this.moveDown();
+
+        break;
+        // check if there is focusable element that doesn't belong to the footer
+        // after the one that isn't focused 
+      }
+    }
+
+  }
+
   findTheClosest() {
+    if(scrollY % innerHeight === 0)
+      return;
+
     if(this.turnedOff)
       return;
 
-    if(scrollY % innerHeight === 0)
+    if(this.scrollBlocked)
       return;
 
     for(let i = 0; i < this.bodyHeight; i += innerHeight) {

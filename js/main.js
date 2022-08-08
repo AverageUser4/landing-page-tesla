@@ -9,10 +9,11 @@ scrollTo({ top: 0, behavior: 'instant' });
 const movingButtonBackground = new MovingButtonBackground();
 const initialAnimation = new InitialAnimation();
 const annoyingScroll = new AnnoyingScroll();
-const mainMenu = new MainMenu(annoyingScroll);
+const mainMenu = new MainMenu(annoyingScroll, movingButtonBackground);
 const headerAndOtherChanger = new HeaderAndOtherChanger();
 
 
+// debug info
 window.addEventListener('keydown', (e) => {
   if(e.key !== 'd')
     return;
@@ -26,15 +27,27 @@ window.addEventListener('keydown', (e) => {
 });
 
 /*
-  - add ability to close menu with escape key
-  - when menu is open buttons outside should not be selectable with tab
+  innerWidth - ze scrollbarem
+  document.body.clientWidth - bez scrollbara
+*/
+
+/*
+  - tab takes you straight to the footer nav, looks bad, etc.
+  - when tab is pressed:
+    - traverse the dom to check if there are still visible nodes to be focused
+    - otherwise scroll down / up and focus the first / last visible element
+    that wasn't visible earlier
+  - DOM traversal will look more or less like this:
+    - we are looking for <a> or <button> element that is AFTER the last focused element
+    - check sibling, check it's every child
+    - check other siblings and their children
+    - if no sibling is what we want, check the further children of the parent
+    - then grandparent etc. until the parent is an element we dont want to go outside
+    (probably .the-main)
+
+
+  - the goDownButton sometimes stays invisible when it should be visible
   - when window is zoomed in, the scroll gets locked in seemingly random postiitons,
     does not happen for every amount of zoom, sometimes you can scroll up but not down
-  - scrollBlocked inside annoying scroll sometimes keeps being set to true forever
-  - menu doesn't have visible scrollbar for whatever reason
-  - tab takes you straight to the footer nav, looks bad, etc.
-  - menu often isn't animated on open
-  - you can scroll when menu is open
   - HeaderAndOtherChanger may need some optimization
-  - you cannot scroll menu because of prevent default in ANnoyingScroll.js
 */

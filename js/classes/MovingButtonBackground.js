@@ -8,11 +8,16 @@ export default class MovingButtonBackground {
   constructor() {
     this.background = document.querySelector('.header-bottom__moving-background');
     this.buttons = document.querySelectorAll('[data-mv-bg="1"]');
+    this.menuButton = document.querySelector('.header-bottom__menu-button');
 
     for(let val of this.buttons) {
       val.addEventListener('mouseenter', (event) => this.mouseEnter(event));
       val.addEventListener('mouseleave', (event) => this.mouseLeave(event));
     }
+  }
+
+  adjustMenuBackground() {
+    this.background.style.left = this.menuButton.getBoundingClientRect().x + 'px';
   }
 
   mouseEnter(event) {
@@ -53,15 +58,3 @@ export default class MovingButtonBackground {
   }
 
 }
-
-/*
-  - przy najechaniu na przycisk:
-    - jeżeli tło nie jest widoczne:
-      - przenieś je natychmiast w miejsce przycisku
-      - natychmiast dostosuj jego wielkość
-      - odegraj tylko przejście dla opacity z 0 na 1
-
-    - jeżeli tło jest widoczne:
-      - przejście z left: x na left: y ma trwać
-      tyle co zmiana wielkości
-*/
