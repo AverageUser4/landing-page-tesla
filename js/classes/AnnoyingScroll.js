@@ -180,11 +180,26 @@ export default class AnnoyingScroll {
     if(e.shiftKey)
       this.lastTabWithShift = true;
 
-    console.log(e.shiftKey, this.lastTabWithShift)
-
     if(document.activeElement.tagName === 'BODY') {
       e.preventDefault();
       this.firstFocusableElement.focus();
+    } 
+    // prevents focus from going to menu / footer when it shouldn't
+    else if(
+        document.activeElement === this.tabAccessibilityButtonTop && 
+        e.shiftKey &&
+        scrollY > 0
+      ) {
+      e.preventDefault();
+      this.onFocusTop();
+    } 
+    else if(
+        document.activeElement === this.tabAccessibilityButtonBottom &&
+        !e.shiftKey &&
+        scrollY < this.bodyHeight - innerHeight
+      ) {
+      e.preventDefault();
+      this.onFocusBottom();
     }
   }
 

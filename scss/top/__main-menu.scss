@@ -11,6 +11,7 @@
 }
 .main-menu-background--visible {
   background: rgba(0, 0, 0, 0.3);
+  // this filter causes considerable lag on lower end hardware
   backdrop-filter: blur(4px);
 }
 

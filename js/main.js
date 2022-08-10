@@ -32,6 +32,10 @@ window.addEventListener('keydown', (e) => {
 */
 
 /*
+  - after going up and then immediately down with tab, the last
+  element is focused and the focus gets shifted to footer, same for going down
+  and up
+  
   - the goDownButton sometimes stays invisible when it should be visible
   - when window is zoomed in, the scroll gets locked in seemingly random postiitons,
     does not happen for every amount of zoom, sometimes you can scroll up but not down
